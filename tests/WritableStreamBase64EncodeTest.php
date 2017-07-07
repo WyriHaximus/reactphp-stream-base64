@@ -22,6 +22,9 @@ final class WritableStreamBase64EncodeTest extends TestCase
         yield ['abcdefghijklmnopqrst'];
         yield ['abcdefghijklmnopqrstuvw'];
         yield ['abcdefghijklmnopqrstuvwxyz'];
+        foreach (range(128, 1337) as $size) {
+            yield [str_pad('a', $size)];
+        }
         yield [str_pad('a', 1337)];
         yield [str_pad('a', 100000)];
         yield [str_pad('a', 1000000)];
