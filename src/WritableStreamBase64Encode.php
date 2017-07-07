@@ -56,13 +56,9 @@ final class WritableStreamBase64Encode implements WritableStreamInterface
 
     private function processBuffer(): string
     {
-        $buffer = $this->buffer;
-        $this->buffer = '';
-        while (strlen($buffer) % 3 !== 0 && strlen($buffer) > 0) {
-            $this->buffer = substr($buffer, -1) . $this->buffer;
-            $buffer = substr($buffer, 0, -1);
-        }
-        $buffer = base64_encode($buffer);
+        $length = strlen($this->buffer);
+        $buffer = base64_encode(substr($this->buffer, 0, $length - $length % 3));
+        $this->buffer = substr($this->buffer, $length - $length % 3);
 
         return $buffer;
     }
