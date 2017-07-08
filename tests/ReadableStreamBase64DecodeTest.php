@@ -19,7 +19,7 @@ final class ReadableStreamBase64DecodeTest extends TestCase
         $loop = Factory::create();
         $throughStream = new ThroughStream();
         $stream = new ReadableStreamBase64Decode($throughStream);
-        $loop->futureTick(function () use ($throughStream, $data) {
+        $loop->addTimer(0.001, function () use ($throughStream, $data) {
             $data = base64_encode($data);
             $chunks = str_split($data);
             $last = count($chunks) - 1;
