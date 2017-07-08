@@ -20,7 +20,5 @@ final class DataProvider
         }
         yield [str_pad('a', 1337)];
         yield [str_pad('a', 100000)];
-        yield [str_pad('a', 1000000)];
-        yield [str_pad('a', 10000000)];
     }
 }
