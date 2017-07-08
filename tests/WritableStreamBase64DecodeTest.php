@@ -6,34 +6,13 @@ use PHPUnit\Framework\TestCase;
 use React\EventLoop\Factory;
 use React\Stream\ThroughStream;
 use WyriHaximus\React\Stream\Base64\WritableStreamBase64Decode;
-use WyriHaximus\React\Stream\Base64\WritableStreamBase64Encode;
 use function Clue\React\Block\await;
 use function React\Promise\Stream\buffer;
 
 final class WritableStreamBase64DecodeTest extends TestCase
 {
-    public function provideData()
-    {
-        yield ['a'];
-        yield ['abc'];
-        yield ['abcdefg'];
-        yield ['abcdefghij'];
-        yield ['abcdefghijklm'];
-        yield ['abcdefghijklmnop'];
-        yield ['abcdefghijklmnopqrst'];
-        yield ['abcdefghijklmnopqrstuvw'];
-        yield ['abcdefghijklmnopqrstuvwxyz'];
-        foreach (range(128, 1337) as $size) {
-            yield [str_pad('a', $size)];
-        }
-        yield [str_pad('a', 1337)];
-        yield [str_pad('a', 100000)];
-        yield [str_pad('a', 1000000)];
-        yield [str_pad('a', 10000000)];
-    }
-
     /**
-     * @dataProvider provideData
+     * @dataProvider WyriHaximus\React\Tests\Stream\Base64\DataProvider::provideData
      */
     public function testHash(string $data)
     {
