@@ -19,7 +19,7 @@ final class WritableStreamBase64DecodeTest extends TestCase
         $loop = Factory::create();
         $throughStream = new ThroughStream();
         $stream = new WritableStreamBase64Decode($throughStream);
-        $loop->addTimer(0.001, function () use ($stream, $data) {
+        $loop->addTimer(0, function () use ($stream, $data) {
             $data = base64_encode($data);
             $chunks = str_split($data);
             $last = count($chunks) - 1;
