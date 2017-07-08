@@ -44,7 +44,7 @@ final class WritableStreamBase64Decode implements WritableStreamInterface
     {
         $this->buffer .= $data;
         $this->stream->end(
-            $this->processBuffer() . base64_decode($this->buffer)
+            $this->processBuffer() . base64_decode($this->buffer, true)
         );
         $this->buffer = '';
     }
@@ -57,7 +57,7 @@ final class WritableStreamBase64Decode implements WritableStreamInterface
     private function processBuffer(): string
     {
         $length = strlen($this->buffer);
-        $buffer = base64_decode(substr($this->buffer, 0, $length - $length % 4));
+        $buffer = base64_decode(substr($this->buffer, 0, $length - $length % 4), true);
         $this->buffer = substr($this->buffer, $length - $length % 4);
 
         return $buffer;
