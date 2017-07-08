@@ -19,7 +19,7 @@ final class ReadableStreamBase64EncodeTest extends TestCase
         $loop = Factory::create();
         $throughStream = new ThroughStream();
         $stream = new ReadableStreamBase64Encode($throughStream);
-        $loop->addTimer(0, function () use ($throughStream, $data) {
+        $loop->addTimer(0.001, function () use ($throughStream, $data) {
             $chunks = str_split($data);
             $last = count($chunks) - 1;
             for ($i = 0; $i < $last; $i++) {
