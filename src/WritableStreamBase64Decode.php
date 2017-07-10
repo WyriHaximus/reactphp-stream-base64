@@ -3,6 +3,7 @@
 namespace WyriHaximus\React\Stream\Base64;
 
 use Evenement\EventEmitterTrait;
+use React\Stream\Util;
 use React\Stream\WritableStreamInterface;
 
 final class WritableStreamBase64Decode implements WritableStreamInterface
@@ -26,6 +27,7 @@ final class WritableStreamBase64Decode implements WritableStreamInterface
     public function __construct(WritableStreamInterface $stream)
     {
         $this->stream = $stream;
+        Util::forwardEvents($stream, $this, ['error', 'drain', 'end', 'close']);
     }
 
     public function isWritable()
