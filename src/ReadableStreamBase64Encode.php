@@ -25,12 +25,12 @@ final class ReadableStreamBase64Encode extends EventEmitter implements ReadableS
     public function __construct(ReadableStreamInterface $stream)
     {
         $this->stream = $stream;
-        $this->stream->on('data', function ($data) {
+        $this->stream->on('data', function ($data): void {
             $this->buffer .= $data;
             $this->emit('data', [$this->processBuffer()]);
         });
-        $this->stream->once('close', function () {
-            $this->emit('data', [base64_encode($this->buffer)]);
+        $this->stream->once('close', function (): void {
+            $this->emit('data', [\base64_encode($this->buffer)]);
             $this->emit('close');
         });
         Util::forwardEvents($stream, $this, ['error', 'end']);
@@ -56,16 +56,16 @@ final class ReadableStreamBase64Encode extends EventEmitter implements ReadableS
         return $this->stream->pipe($dest, $options);
     }
 
-    public function close()
+    public function close(): void
     {
         $this->stream->close();
     }
 
     private function processBuffer(): string
     {
-        $length = strlen($this->buffer);
-        $buffer = base64_encode(substr($this->buffer, 0, $length - $length % 3));
-        $this->buffer = substr($this->buffer, $length - $length % 3);
+        $length = \strlen($this->buffer);
+        $buffer = \base64_encode(\substr($this->buffer, 0, $length - $length % 3));
+        $this->buffer = \substr($this->buffer, $length - $length % 3);
 
         return $buffer;
     }
