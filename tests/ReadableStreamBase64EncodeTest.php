@@ -2,12 +2,12 @@
 
 namespace WyriHaximus\React\Tests\Stream\Base64;
 
+use function Clue\React\Block\await;
 use PHPUnit\Framework\TestCase;
 use React\EventLoop\Factory;
+use function React\Promise\Stream\buffer;
 use React\Stream\ThroughStream;
 use WyriHaximus\React\Stream\Base64\ReadableStreamBase64Encode;
-use function Clue\React\Block\await;
-use function React\Promise\Stream\buffer;
 
 /**
  * @internal
