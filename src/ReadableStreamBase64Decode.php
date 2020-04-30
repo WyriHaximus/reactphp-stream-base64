@@ -29,11 +29,11 @@ final class ReadableStreamBase64Decode extends EventEmitter implements ReadableS
             $this->buffer .= $data;
             $this->emit('data', [$this->processBuffer()]);
         });
-        $this->stream->once('close', function (): void {
+        $this->stream->once('end', function (): void {
             $this->emit('data', [\base64_decode($this->buffer, true)]);
-            $this->emit('close');
+            $this->emit('end');
         });
-        Util::forwardEvents($stream, $this, ['error', 'end']);
+        Util::forwardEvents($stream, $this, ['error', 'close']);
     }
 
     public function isReadable()
@@ -53,7 +53,7 @@ final class ReadableStreamBase64Decode extends EventEmitter implements ReadableS
 
     public function pipe(WritableStreamInterface $dest, array $options = [])
     {
-        return $this->stream->pipe($dest, $options);
+        return Util::pipe($this, $dest, $options);
     }
 
     public function close(): void

@@ -20,8 +20,10 @@ final class ReadableStreamBase64EncodeTest extends TestCase
     public function testHash(string $data): void
     {
         $loop = Factory::create();
+        $pipeThroughStream = new ThroughStream();
         $throughStream = new ThroughStream();
         $stream = new ReadableStreamBase64Encode($throughStream);
+        $stream->pipe($pipeThroughStream);
         $loop->addTimer(0.001, function () use ($throughStream, $data): void {
             $chunks = \str_split($data);
             $last = \count($chunks) - 1;
@@ -30,6 +32,6 @@ final class ReadableStreamBase64EncodeTest extends TestCase
             }
             $throughStream->end($chunks[$last]);
         });
-        self::assertSame(\base64_encode($data), await(buffer($stream), $loop));
+        self::assertSame(\base64_encode($data), await(buffer($pipeThroughStream), $loop));
     }
 }
